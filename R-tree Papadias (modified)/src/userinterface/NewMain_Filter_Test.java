@@ -19,7 +19,7 @@ public class NewMain_Filter_Test extends Canvas {
     	RTDirNode temp1= null;
     	RTDataNode temp2=null;
     	
-    	
+    	//comment two
     	if(tc.rt.root_is_data==false)
     		temp1= (RTDirNode) tc.rt.root_ptr;
     	else
