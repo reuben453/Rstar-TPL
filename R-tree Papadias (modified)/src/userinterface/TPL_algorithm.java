@@ -1,5 +1,9 @@
 package userinterface;
+import java.math.BigDecimal;
 import java.util.*;
+import java.awt.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
 
 
@@ -531,6 +535,7 @@ public class TPL_algorithm {
                 
         //TPL_algorithm a= new TPL_algorithm();
 		TPL_filter(query_point);
+                
 		Set<RTNode> N_ref = new HashSet<RTNode>(Constants.cap);
 		Set<RTDataNode> P_ref = new HashSet<RTDataNode>(Constants.cap);
 		Iterator<RTNode> it = ref_set.iterator();
@@ -612,7 +617,8 @@ public class TPL_algorithm {
 			{
 				cand_set.remove(p);
 				System.out.println("************RESULT FOUND***********"+p.data[0].data[0]+" "+p.data[0].data[2]);
-				return;
+				cand_set.add(p);
+                                return;
 			}
 		}
 		

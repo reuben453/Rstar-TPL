@@ -5,6 +5,7 @@
 package userinterface;
 
 import java.awt.*;
+import java.util.Iterator;
 
 class RectArea extends Canvas {
 	SortedLinList queryres=null;
@@ -29,7 +30,7 @@ class RectArea extends Canvas {
     {
     	if (((TreeCreation)controller).displaylevel == 200) return; // display only query results
         Dimension d = getSize();
-
+        //System.out.println("Now it begins\n\n\n\n\n\n");
         Color prev = g.getColor();
         switch(node.level)
         {
@@ -52,11 +53,21 @@ class RectArea extends Canvas {
                 g.setColor(Color.lightGray);
                 break;
         }
-
+       
         for (int i=0; i<node.get_num(); i++)
         {
             if (node instanceof RTDataNode)
             {
+                RTDataNode p = null;
+                if(TPL_algorithm.cand_set.size()==1)
+                {
+                    Iterator <RTDataNode> i1 = TPL_algorithm.cand_set.iterator();
+                    p=i1.next();
+                g.setColor(Color.PINK);
+                 g.drawOval((int)(p.data[0].data[0]), (int)(p.data[0].data[2]), 5, 5);
+                 return;
+                }		
+               
                 RTDataNode datanode = (RTDataNode)node;
 
                 Rectangle r = new Rectangle((int)datanode.data[i].get_mbr()[0],
@@ -80,6 +91,7 @@ class RectArea extends Canvas {
                 if ((((TreeCreation)controller).displaylevel==199) ||
                 	   (node.level == ((TreeCreation)controller).displaylevel))
                 {		g.drawRect(box.x, box.y, box.width - 1, box.height - 1);
+                //System.out.println(box.x + " " + box.y+ " " + (box.width - 1)+ " " + (box.height - 1));
                      //System.out.println((box.width - 1)+" "+(box.height - 1));
                      if(box.width - 1<=0)
                     	 g.drawOval(box.x, box.y, 5, 5);
@@ -94,35 +106,35 @@ class RectArea extends Canvas {
                 float[] mbr = n.get_res_mbr();
                 float[] mbr1 = n.get_mbr();
                 Color temp = g.getColor();
-                //if(!(n.get_mbr()[0] == n.get_res_mbr()[0] && n.get_mbr()[1] == n.get_res_mbr()[1] && n.get_mbr()[2] == n.get_res_mbr()[2] && n.get_mbr()[3] == n.get_res_mbr()[3]))
-                //	g.setColor(Color.ORANGE);
+                if(!(n.get_mbr()[0] == n.get_res_mbr()[0] && n.get_mbr()[1] == n.get_res_mbr()[1] && n.get_mbr()[2] == n.get_res_mbr()[2] && n.get_mbr()[3] == n.get_res_mbr()[3]))
+                	g.setColor(Color.ORANGE);
 
                 Rectangle r = new Rectangle((int)mbr[0],
                                             (int)mbr[2],
                                             (int)mbr[1] - (int)mbr[0],
                                             (int)mbr[3] - (int)mbr[2]);
                 
-                /*Rectangle r1 = new Rectangle((int)mbr1[0],
+              /*  Rectangle r1 = new Rectangle((int)mbr1[0],
                         (int)mbr1[2],
                         (int)mbr1[1] - (int)mbr1[0],
                         (int)mbr1[3] - (int)mbr1[2]);*/
 
-                outp+="Dirnode level " + node.level + " entry " + i + ": " + r.x + " " + (r.x + r.width) + " "+ r.y + " "+ (r.y + r.height) + " " + "\n";
-                Rectangle box = getDrawableRect(r, d);
-                //Rectangle box1 = getDrawableRect(r1, d);
-
-                if(mbr[0] != -1)
-                	drawNode(dirnode.entries[i].get_son(), g);
+                //outp+="Dirnode level " + node.level + " entry " + i + ": " + r.x + " " + (r.x + r.width) + " "+ r.y + " "+ (r.y + r.height) + " " + "\n";
+                //Rectangle box = getDrawableRect(r, d);
+                Rectangle box1 = getDrawableRect(r, d);
+                if(mbr[0]!=-1) //&& mbr[1]!=-1 && mbr[2]!=-1 && mbr[3]!=-1)
+                drawNode(dirnode.entries[i].get_son(), g);
 
                 if ((((TreeCreation)controller).displaylevel==199) ||
                 	   (node.level == ((TreeCreation)controller).displaylevel))
                 {
-                    g.drawRect(box.x, box.y, box.width - 1, box.height - 1);
+                  //  g.drawRect(box.x, box.y, box.width - 1, box.height - 1);
                     //System.out.println((box.width - 1)+" "+(box.height - 1));
-                     //if(box.width - 1<=0)
-                    //g.drawOval(box.x, box.y, 5, 5);
-                     //g.setColor(temp);
-                     //g.drawRect(box1.x, box1.y, box1.width - 1, box1.height - 1);
+                 //    if(box.width - 1<=0)
+               //     g.drawOval(box.x, box.y, 5, 5);
+                     g.setColor(temp);
+                     g.drawRect(box1.x, box1.y, box1.width - 1, box1.height - 1);
+                   //  System.out.println(box1.x +" "+ box1.y +" "+ box1.width +" "+ (box1.height - 1)+" ");
                 }
             }
         }
@@ -194,6 +206,7 @@ class RectArea extends Canvas {
 	        	float mbr[] = ((Data)obj).data;
 	        	Rectangle r = new Rectangle((int)mbr[0], (int)mbr[2], (int)mbr[1] - (int)mbr[0], (int)mbr[3] - (int)mbr[2]);
             	Rectangle box = getDrawableRect(r, d);
+                g.setColor(Color.BLACK);
             	g.drawRect(box.x, box.y, box.width - 1, box.height - 1);
                
             }
