@@ -14,7 +14,7 @@ public class NewMain_Filter_Test extends Canvas {
      */
     public static void main(String[] args) {
     	
-    	TreeCreation tc = new TreeCreation("ab.rtr",3, 2,256,128);
+    	TreeCreation tc = new TreeCreation("ab.rtr",300, 2,256,128);
     	//TreeCreation tc = new TreeCreation("ab.rtr",128);
     	RTDirNode temp1 = null;
     	RTDataNode temp2 = null;
@@ -79,6 +79,7 @@ public class NewMain_Filter_Test extends Canvas {
     	//float Bp[] = a.clipping(q, cur_node);*/
     	//a.Reverse_nearest_neighbour(tc.rt, q);
     	a.Reverse_nearest_neighbour(tc.rt, q);
+    	System.out.println("Page Accesses: "+tc.rt.page_access);
         //float trim=a.trim(q, a.cand_set, cur_node);
         /*
         

@@ -1,9 +1,5 @@
 package userinterface;
-import java.math.BigDecimal;
 import java.util.*;
-import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 
 
 
@@ -13,7 +9,7 @@ public class TPL_algorithm {
 	 * @param args
 	 */
 	
-	Set<RTDataNode> cand_set = new HashSet<RTDataNode>(Constants.cap);
+	static Set<RTDataNode> cand_set = new HashSet<RTDataNode>(Constants.cap);
 	Set<RTNode> ref_set = new HashSet<RTNode>(Constants.cap);
 	PriorityQueue<RTNode> queue;
 	Comparator<RTNode> comparator;
