@@ -14,10 +14,10 @@ public class NewMain_Filter_Test extends Canvas {
      */
     public static void main(String[] args) {
     	
-    	TreeCreation tc = new TreeCreation("ab.rtr",200, 2,256,128);
+    	TreeCreation tc = new TreeCreation("ab.rtr",3, 2,256,128);
     	//TreeCreation tc = new TreeCreation("ab.rtr",128);
-    	RTDirNode temp1= null;
-    	RTDataNode temp2=null;
+    	RTDirNode temp1 = null;
+    	RTDataNode temp2 = null;
     	
     	//comment two
     	if(tc.rt.root_is_data==false)
@@ -37,19 +37,19 @@ public class NewMain_Filter_Test extends Canvas {
     	//d.data[0]=d.data[1]=d.data[2]=d.data[3]=200;
     	cur_node.data[0]=d;
     	Data d1 = new Data();
-    	d1.data[0]=d1.data[1]=400;
-    	d1.data[2]=d1.data[3]=300;
+    	d1.data[0]=d1.data[1]=100;
+    	d1.data[2]=d1.data[3]=100;
     	cur_node.data[1]=d1;
     	
     	Data d2 = new Data();
-    	d2.data[0] = d2.data[1] = 350;
-    	d2.data[2] = d2.data[3] = 250;
+    	d2.data[0] = d2.data[1] = 200;
+    	d2.data[2] = d2.data[3] = 200;
     	cur_node.data[2] = d2;
     	//cur_node.data[0].
     	//cur_node.data[0].
     	//float mid[]=new float[2];*/
     	PPoint q = new PPoint();
-    	q.data[0]=1000;q.data[1]=1000;
+    	q.data[0]=205;q.data[1]=205;
     	
     	   	
     	//mid[0]=500;

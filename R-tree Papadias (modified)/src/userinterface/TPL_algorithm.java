@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
+
+
 public class TPL_algorithm {
 
 	/**
@@ -505,8 +507,8 @@ public class TPL_algorithm {
             	cur_node.res_mbr = null;
             	return Bp;
             }
-            else
-            	System.out.println("TRIMMED\n"+cur_node.get_mbr()[0]+" "+cur_node.get_mbr()[1]+" "+cur_node.get_mbr()[2]+" "+cur_node.get_mbr()[3]+"\n"+cur_node.get_res_mbr()[0]+" "+cur_node.get_res_mbr()[1]+" "+cur_node.get_res_mbr()[2]+" "+cur_node.get_res_mbr()[3]);
+            //else
+            //	System.out.println("TRIMMED\n"+cur_node.get_mbr()[0]+" "+cur_node.get_mbr()[1]+" "+cur_node.get_mbr()[2]+" "+cur_node.get_mbr()[3]+"\n"+cur_node.get_res_mbr()[0]+" "+cur_node.get_res_mbr()[1]+" "+cur_node.get_res_mbr()[2]+" "+cur_node.get_res_mbr()[3]);
             	
             for(int i = 0; i < 2*Constants.DIMENSION; i++)
     			Bp[i] = cur_node.get_res_mbr()[i];
@@ -610,10 +612,11 @@ public class TPL_algorithm {
 				if(Constants.MINDIST(temp1, N_temp.get_mbr()) < Constants.objectDIST(temp1, query_point))
 					p.toVisit.add(N_temp);
 			}
-			if(p.toVisit != null && !p.toVisit.isEmpty())
+			if(p.toVisit == null || p.toVisit.isEmpty())
 			{
 				cand_set.remove(p);
 				System.out.println("************RESULT FOUND***********"+p.data[0].data[0]+" "+p.data[0].data[2]);
+				return;
 			}
 		}
 		
@@ -649,14 +652,14 @@ public class TPL_algorithm {
 				}
 			}
 			if(cand_set.contains(p))
-				p.toVisit = new HashSet<RTNode>();
+				p.toVisit.clear();
 				
 		}
 		Refinement_Round(query_point, P_ref, N_ref);
 		if(cand_set.isEmpty())
 			return;
-		N_ref = null;
-		P_ref = null;
+		N_ref.clear();
+		P_ref.clear();
 		RTNode N = findMin();
 		if(N == null)
 			return;
@@ -686,7 +689,7 @@ public class TPL_algorithm {
 			RTNode node;
 			int count;
 		}
-		LinkedList<Node_temp> list = new LinkedList();
+		LinkedList<Node_temp> list = new LinkedList<Node_temp>();
 		Node_temp temp = new Node_temp();
 		Iterator<RTDataNode> it = cand_set.iterator();
 		
@@ -711,7 +714,7 @@ public class TPL_algorithm {
 		}
 		Node_temp least = null;
 		Node_temp t;
-		for(Iterator it1 = list.iterator(); it1.hasNext(); )
+		for(Iterator<Node_temp> it1 = list.iterator(); it1.hasNext(); )
 		{
 			t = (Node_temp) it1.next();
 			if(least == null)
@@ -739,7 +742,7 @@ public class TPL_algorithm {
 			temp = queue.remove();
             if(temp==null)
             	System.out.println("Null Temp");
-            System.out.println("Removed From Queue" + temp.get_mbr()[0] +" " + temp.get_mbr()[1] + " " +temp.get_mbr()[2] +" " + temp.get_mbr()[3]);
+            //System.out.println("Removed From Queue" + temp.get_mbr()[0] +" " + temp.get_mbr()[1] + " " +temp.get_mbr()[2] +" " + temp.get_mbr()[3]);
 			if (trim(query_point, cand_set, temp) == Constants.MAXFLOAT)
 				ref_set.add(temp);
 			else
