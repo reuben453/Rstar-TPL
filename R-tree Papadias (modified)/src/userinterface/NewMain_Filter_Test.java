@@ -49,7 +49,7 @@ public class NewMain_Filter_Test extends Canvas {
     	//cur_node.data[0].
     	//float mid[]=new float[2];*/
     	PPoint q = new PPoint();
-    	q.data[0]=100;q.data[1]=100;
+    	q.data[0]=1000;q.data[1]=1000;
     	
     	   	
     	//mid[0]=500;
@@ -77,6 +77,7 @@ public class NewMain_Filter_Test extends Canvas {
         a.cand_set.add(three);
     	//boolean call=a.compute_res_mbr((float)Float.POSITIVE_INFINITY, cur_node, mid, q);
     	//float Bp[] = a.clipping(q, cur_node);*/
+    	//a.Reverse_nearest_neighbour(tc.rt, q);
     	a.Reverse_nearest_neighbour(tc.rt, q);
         //float trim=a.trim(q, a.cand_set, cur_node);
         /*

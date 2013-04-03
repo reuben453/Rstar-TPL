@@ -18,10 +18,13 @@
 package userinterface;
 
 import java.io.*;
+import java.util.HashSet;
 
 public final class RTDataNode extends RTNode implements Node
 {
 	Data data[];                         // array of data (leaf mbrs)
+	
+	HashSet<RTNode> toVisit = null;
 
     public boolean is_data_node()        // this is a data node
     {return true;}

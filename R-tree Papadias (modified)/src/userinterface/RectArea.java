@@ -94,34 +94,35 @@ class RectArea extends Canvas {
                 float[] mbr = n.get_res_mbr();
                 float[] mbr1 = n.get_mbr();
                 Color temp = g.getColor();
-                if(!(n.get_mbr()[0] == n.get_res_mbr()[0] && n.get_mbr()[1] == n.get_res_mbr()[1] && n.get_mbr()[2] == n.get_res_mbr()[2] && n.get_mbr()[3] == n.get_res_mbr()[3]))
-                	g.setColor(Color.ORANGE);
+                //if(!(n.get_mbr()[0] == n.get_res_mbr()[0] && n.get_mbr()[1] == n.get_res_mbr()[1] && n.get_mbr()[2] == n.get_res_mbr()[2] && n.get_mbr()[3] == n.get_res_mbr()[3]))
+                //	g.setColor(Color.ORANGE);
 
                 Rectangle r = new Rectangle((int)mbr[0],
                                             (int)mbr[2],
                                             (int)mbr[1] - (int)mbr[0],
                                             (int)mbr[3] - (int)mbr[2]);
                 
-                Rectangle r1 = new Rectangle((int)mbr1[0],
+                /*Rectangle r1 = new Rectangle((int)mbr1[0],
                         (int)mbr1[2],
                         (int)mbr1[1] - (int)mbr1[0],
-                        (int)mbr1[3] - (int)mbr1[2]);
+                        (int)mbr1[3] - (int)mbr1[2]);*/
 
                 outp+="Dirnode level " + node.level + " entry " + i + ": " + r.x + " " + (r.x + r.width) + " "+ r.y + " "+ (r.y + r.height) + " " + "\n";
                 Rectangle box = getDrawableRect(r, d);
-                Rectangle box1 = getDrawableRect(r1, d);
+                //Rectangle box1 = getDrawableRect(r1, d);
 
-                drawNode(dirnode.entries[i].get_son(), g);
+                if(mbr[0] != -1)
+                	drawNode(dirnode.entries[i].get_son(), g);
 
                 if ((((TreeCreation)controller).displaylevel==199) ||
                 	   (node.level == ((TreeCreation)controller).displaylevel))
                 {
                     g.drawRect(box.x, box.y, box.width - 1, box.height - 1);
                     //System.out.println((box.width - 1)+" "+(box.height - 1));
-                     if(box.width - 1<=0)
-                    g.drawOval(box.x, box.y, 5, 5);
-                     g.setColor(temp);
-                     g.drawRect(box1.x, box1.y, box1.width - 1, box1.height - 1);
+                     //if(box.width - 1<=0)
+                    //g.drawOval(box.x, box.y, 5, 5);
+                     //g.setColor(temp);
+                     //g.drawRect(box1.x, box1.y, box1.width - 1, box1.height - 1);
                 }
             }
         }

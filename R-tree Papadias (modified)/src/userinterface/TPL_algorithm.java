@@ -533,6 +533,23 @@ public class TPL_algorithm {
                 
         //TPL_algorithm a= new TPL_algorithm();
 		TPL_filter(query_point);
+		Set<RTNode> N_ref = new HashSet<RTNode>(Constants.cap);
+		Set<RTDataNode> P_ref = new HashSet<RTDataNode>(Constants.cap);
+		Iterator<RTNode> it = ref_set.iterator();
+		RTNode temp = null;
+		while(it.hasNext())
+		{
+			temp = it.next();
+			if(temp.num_entries == 1 && temp.level == 0)
+			{
+				RTDataNode temp1 = (RTDataNode) temp;
+				P_ref.add(temp1);
+			}
+			else
+				N_ref.add(temp);
+		}
+		TPL_refinement(query_point, P_ref, N_ref);
+		return;
 		//RTDirNode temp1 = (RTDirNode) rt.root_ptr;
 		//queue.add(temp1.entries[0].get_son());
 		//queue.add(temp1.entries[1].get_son());
@@ -547,8 +564,171 @@ public class TPL_algorithm {
 		//return result;
 		
 	}
-		
 	
+	private void Refinement_Round(PPoint query_point, Set<RTDataNode> P_ref, Set<RTNode> N_ref)
+	{
+		Iterator<RTDataNode> cand_it = cand_set.iterator();
+		loop1: while(cand_it.hasNext())
+		{
+			PPoint temp1 = new PPoint(Constants.DIMENSION);
+			PPoint temp2 = new PPoint(Constants.DIMENSION);
+			
+			RTDataNode p = cand_it.next();
+			Iterator<RTDataNode> it1 = P_ref.iterator();
+			temp1.data = new float[Constants.DIMENSION];
+			temp1.data[0] = p.data[0].data[0];
+			temp1.data[1] = p.data[0].data[2];
+			while(it1.hasNext())
+			{
+				RTDataNode p_ = it1.next();
+				//if(p_ == p)
+				//	continue;
+								
+				temp2.data = new float[Constants.DIMENSION];
+				temp2.data[0] = p_.data[0].data[0];
+				temp2.data[1] = p_.data[0].data[2];
+				if(Constants.objectDIST(temp1, temp2) < Constants.objectDIST(query_point, temp1))
+				{
+					cand_set.remove(temp1);
+					continue loop1;
+				}
+			}
+			Iterator<RTNode> it = N_ref.iterator();
+			while(it.hasNext())
+			{
+				RTNode temp = it.next();
+				if(Constants.MINMAXDIST(temp1, temp.get_mbr()) < Constants.objectDIST(temp1, query_point))
+				{
+					cand_set.remove(temp1);
+					continue loop1;
+				}
+			}
+			Iterator<RTNode> it11 = N_ref.iterator();
+			while(it11.hasNext())
+			{
+				RTNode N_temp = it11.next();
+				if(Constants.MINDIST(temp1, N_temp.get_mbr()) < Constants.objectDIST(temp1, query_point))
+					p.toVisit.add(N_temp);
+			}
+			if(p.toVisit != null && !p.toVisit.isEmpty())
+			{
+				cand_set.remove(p);
+				System.out.println("************RESULT FOUND***********"+p.data[0].data[0]+" "+p.data[0].data[2]);
+			}
+		}
+		
+		
+	}
+	
+	private void TPL_refinement(PPoint query_point, Set<RTDataNode> P_ref, Set<RTNode> N_ref)
+	{
+		Iterator<RTDataNode> cand_it = cand_set.iterator();
+		loop1: while(cand_it.hasNext())
+		{
+			RTDataNode p = cand_it.next();
+			Iterator<RTDataNode> cand_it1 = cand_set.iterator();
+			
+			PPoint temp1 = new PPoint(Constants.DIMENSION);
+			PPoint temp2 = new PPoint(Constants.DIMENSION);
+			temp1.data = new float[Constants.DIMENSION];
+			temp1.data[0] = p.data[0].data[0];
+			temp1.data[1] = p.data[0].data[2];
+			while(cand_it1.hasNext())
+			{
+				RTDataNode p_ = cand_it1.next();
+				if(p_ == p)
+					continue;
+				
+				temp2.data = new float[Constants.DIMENSION];
+				temp2.data[0] = p_.data[0].data[0];
+				temp2.data[1] = p_.data[0].data[2];
+				if(Constants.objectDIST(temp1, temp2) < Constants.objectDIST(query_point, temp1))
+				{
+					cand_set.remove(temp1);
+					continue loop1;
+				}
+			}
+			if(cand_set.contains(p))
+				p.toVisit = new HashSet<RTNode>();
+				
+		}
+		Refinement_Round(query_point, P_ref, N_ref);
+		if(cand_set.isEmpty())
+			return;
+		N_ref = null;
+		P_ref = null;
+		RTNode N = findMin();
+		if(N == null)
+			return;
+		Iterator<RTDataNode> cand_it1 = cand_set.iterator();
+		while(cand_it1.hasNext())
+			cand_it1.next().toVisit.remove(N);
+		if(N.level == 0)
+		{
+			for(int i = 0; i < N.num_entries; i++)
+			{
+				RTDataNode temp = new RTDataNode(N.my_tree, (RTDataNode)N, i);
+				P_ref.add(temp);
+			}
+		}
+		else
+		{
+			for(int i = 0; i < N.num_entries; i++)
+				N_ref.add(((RTDirNode)N).entries[i].get_son());
+			
+		}
+	}
+	
+	RTNode findMin()
+	{
+		class Node_temp
+		{
+			RTNode node;
+			int count;
+		}
+		LinkedList<Node_temp> list = new LinkedList();
+		Node_temp temp = new Node_temp();
+		Iterator<RTDataNode> it = cand_set.iterator();
+		
+		while(it.hasNext())
+		{
+			RTDataNode t = it.next();
+			if(t.toVisit != null && !t.toVisit.isEmpty())
+			{
+				Iterator<RTNode> it1 = t.toVisit.iterator();
+				while(it1.hasNext())
+				{
+					RTNode temp1 = it1.next();
+					temp.node = temp1;
+					temp.count = 1;
+					if(list.contains(temp1))
+						list.get(list.indexOf(temp1)).count++;
+					else
+						list.add(temp);
+				}
+				//temp.addAll(t.toVisit);
+			}
+		}
+		Node_temp least = null;
+		Node_temp t;
+		for(Iterator it1 = list.iterator(); it1.hasNext(); )
+		{
+			t = (Node_temp) it1.next();
+			if(least == null)
+				least = t;
+			else
+			{
+				if(t.node.level < least.node.level)
+					least = t;
+				else
+					if(t.count > least.count)
+						least = t;
+			}
+		}
+		if(least == null)
+			return null;
+		return least.node;
+	}
 	
 	private void TPL_filter(PPoint query_point)
 	{
@@ -557,9 +737,9 @@ public class TPL_algorithm {
 		{
                     
 			temp = queue.remove();
-                        if(temp==null)
-                            System.out.println("Null Temp");
-                        System.out.println("Removed From Queue" + temp.get_mbr()[0] +" " + temp.get_mbr()[1] + " " +temp.get_mbr()[2] +" " + temp.get_mbr()[3]);
+            if(temp==null)
+            	System.out.println("Null Temp");
+            System.out.println("Removed From Queue" + temp.get_mbr()[0] +" " + temp.get_mbr()[1] + " " +temp.get_mbr()[2] +" " + temp.get_mbr()[3]);
 			if (trim(query_point, cand_set, temp) == Constants.MAXFLOAT)
 				ref_set.add(temp);
 			else
