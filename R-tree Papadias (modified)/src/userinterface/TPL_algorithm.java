@@ -765,14 +765,15 @@ public class TPL_algorithm {
             if(temp==null)
             	System.out.println("Null Temp");
             //System.out.println("Removed From Queue" + temp.get_mbr()[0] +" " + temp.get_mbr()[1] + " " +temp.get_mbr()[2] +" " + temp.get_mbr()[3]);
-			if (trim(query_point, cand_set, temp) == Constants.MAXFLOAT)
+			if (trim(query_point, cand_set, temp) == Constants.MAXFLOAT && !ref_set.contains(temp))
 				ref_set.add(temp);
 			else
 			{
 				if(temp.level == 0 && temp.num_entries == 1)
 				{
 					RTDataNode temp1 = (RTDataNode) temp;
-					cand_set.add(temp1);
+					if(!cand_set.contains(temp1))
+						cand_set.add(temp1);
 				}
 				else if(temp.level == 0 && temp.num_entries > 1)
 				{
@@ -785,7 +786,7 @@ public class TPL_algorithm {
 						//temp2 = (RTDataNode) temp1;
 						if(trim(query_point,cand_set,temp2) != Constants.MAXFLOAT)
 							queue.add(temp2);
-						else
+						else if(!ref_set.contains(temp2))
 							ref_set.add(temp2);						
 					}
 				}
@@ -795,7 +796,7 @@ public class TPL_algorithm {
 					for(int i = 0; i < temp1.num_entries; i++)
 					{
 						float temp_dist = trim(query_point, cand_set, temp1.entries[i].get_son());
-						if(temp_dist == Constants.MAXFLOAT)
+						if(temp_dist == Constants.MAXFLOAT && !ref_set.contains(temp1.entries[i].get_son()))
 							ref_set.add(temp1.entries[i].get_son());
 						else
 							queue.add(temp1.entries[i].get_son());
