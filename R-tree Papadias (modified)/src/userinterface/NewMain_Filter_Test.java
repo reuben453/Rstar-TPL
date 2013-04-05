@@ -14,7 +14,7 @@ public class NewMain_Filter_Test extends Canvas {
      */
     public static void main(String[] args) {
     	
-    	TreeCreation tc = new TreeCreation("ab.rtr",300, 2,256,128);
+    	TreeCreation tc = new TreeCreation("ab.rtr", 4, 2, 256, 128);
     	//TreeCreation tc = new TreeCreation("ab.rtr",128);
     	RTDirNode temp1 = null;
     	RTDataNode temp2 = null;
@@ -49,7 +49,7 @@ public class NewMain_Filter_Test extends Canvas {
     	//cur_node.data[0].
     	//float mid[]=new float[2];*/
     	PPoint q = new PPoint();
-    	q.data[0]=205;q.data[1]=205;
+    	q.data[0]=00;q.data[1]=00;
     	
     	   	
     	//mid[0]=500;
@@ -64,17 +64,17 @@ public class NewMain_Filter_Test extends Canvas {
     		System.out.println(cur_node.res_mbr[i]);
     	
     	RTDataNode one = new RTDataNode(tc.rt, cur_node, 1);
-    	RTDataNode two = new RTDataNode(tc.rt, cur_node, 2);
-        Data d3 = new Data();
-        d3.data[0] = d3.data[1] = 500;
-        d3.data[2] = d3.data[3] = 100;
+    	RTDataNode two = new RTDataNode(tc.rt, cur_node, 2);*/
+        /*Data d3 = new Data();
+        d3.data[0] = d3.data[1] = 100;
+        d3.data[2] = d3.data[3] = 200;
         cur_node.data[3] = d3;
         RTDataNode three = new RTDataNode(tc.rt, cur_node, 3);
         cur_node.data[3] = null;
-        three.data[0] = d3;
-    	a.cand_set.add(one);
+        three.data[0] = d3;*/
+    	//a.cand_set.add(one);
     	//a.cand_set.add(two);
-        a.cand_set.add(three);
+        //a.cand_set.add(three);
     	//boolean call=a.compute_res_mbr((float)Float.POSITIVE_INFINITY, cur_node, mid, q);
     	//float Bp[] = a.clipping(q, cur_node);*/
     	//a.Reverse_nearest_neighbour(tc.rt, q);

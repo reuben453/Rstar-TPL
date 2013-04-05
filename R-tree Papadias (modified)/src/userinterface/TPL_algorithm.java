@@ -9,8 +9,8 @@ public class TPL_algorithm {
 	 * @param args
 	 */
 	
-	static Set<RTDataNode> cand_set = new HashSet<RTDataNode>(Constants.cap);
-	Set<RTNode> ref_set = new HashSet<RTNode>(Constants.cap);
+	static List<RTDataNode> cand_set = new LinkedList<RTDataNode>();
+	Set<RTNode> ref_set = new HashSet<RTNode>();
 	PriorityQueue<RTNode> queue;
 	Comparator<RTNode> comparator;
 	
@@ -18,7 +18,7 @@ public class TPL_algorithm {
 	{
 	}
 	
-	public float trim(PPoint query_point, Set<RTDataNode> pt_set, RTNode N)
+	public float trim(PPoint query_point, List<RTDataNode> cand_set, RTNode N)
 	{
 		
            	if(N.res_mbr == null)
@@ -565,13 +565,16 @@ public class TPL_algorithm {
 	
 	private void Refinement_Round(PPoint query_point, Set<RTDataNode> P_ref, Set<RTNode> N_ref)
 	{
-		Iterator<RTDataNode> cand_it = cand_set.iterator();
-		loop1: while(cand_it.hasNext())
+		//Iterator<RTDataNode> cand_it = cand_set.iterator();
+		
+		loop1: for(int i = 0; i < cand_set.size(); i++)
+		//loop1: while(cand_it.hasNext())
 		{
 			PPoint temp1 = new PPoint(Constants.DIMENSION);
 			PPoint temp2 = new PPoint(Constants.DIMENSION);
 			
-			RTDataNode p = cand_it.next();
+			//RTDataNode p = cand_it.next();
+			RTDataNode p = cand_set.get(i);
 			Iterator<RTDataNode> it1 = P_ref.iterator();
 			temp1.data = new float[Constants.DIMENSION];
 			temp1.data[0] = p.data[0].data[0];
@@ -587,7 +590,8 @@ public class TPL_algorithm {
 				temp2.data[1] = p_.data[0].data[2];
 				if(Constants.objectDIST(temp1, temp2) < Constants.objectDIST(query_point, temp1))
 				{
-					cand_set.remove(temp1);
+					//cand_it.remove();
+					cand_set.remove(i);
 					continue loop1;
 				}
 			}
@@ -597,7 +601,8 @@ public class TPL_algorithm {
 				RTNode temp = it.next();
 				if(Constants.MINMAXDIST(temp1, temp.get_mbr()) < Constants.objectDIST(temp1, query_point))
 				{
-					cand_set.remove(temp1);
+					//cand_it.remove();
+					cand_set.remove(i);
 					continue loop1;
 				}
 			}
@@ -610,31 +615,52 @@ public class TPL_algorithm {
 			}
 			if(p.toVisit == null || p.toVisit.isEmpty())
 			{
-				cand_set.remove(p);
-				System.out.println("************RESULT FOUND***********"+p.data[0].data[0]+" "+p.data[0].data[2]);
-				return;
+				Iterator<RTDataNode> it34 = cand_set.iterator();
+				int count = 0;
+				while(it34.hasNext())
+				{
+					RTDataNode temp = it34.next();
+					if(temp.toVisit != null && temp.toVisit.isEmpty())
+					{
+						PPoint t = new PPoint(Constants.DIMENSION);
+						t.data[0] = temp.data[0].data[0];
+						t.data[1] = temp.data[0].data[2];
+						count++;
+						System.out.println(""+Constants.objectDIST(t, query_point)+"  "+t.data[0]+","+t.data[1]);
+					}
+				}
+				//cand_it.remove();
+				cand_set.remove(i);
+				//if(!cand_it.hasNext() || cand_set.isEmpty())
+				//if(cand_set.size() == 1)
+				{
+					System.out.println("************RESULT FOUND***********"+p.data[0].data[0]+" "+p.data[0].data[2]);
+					return;
+				}
 			}
 		}
-		
-		
 	}
 	
 	private void TPL_refinement(PPoint query_point, Set<RTDataNode> P_ref, Set<RTNode> N_ref)
 	{
-		Iterator<RTDataNode> cand_it = cand_set.iterator();
-		loop1: while(cand_it.hasNext())
+		//Iterator<RTDataNode> cand_it = cand_set.iterator();
+		loop1: for(int i = 0; i < cand_set.size(); i++)
+		//loop1: while(cand_it.hasNext())
 		{
-			RTDataNode p = cand_it.next();
-			Iterator<RTDataNode> cand_it1 = cand_set.iterator();
+			RTDataNode p = cand_set.get(i);
+			//RTDataNode p = cand_it.next();
+			//Iterator<RTDataNode> cand_it1 = cand_set.iterator();
 			
 			PPoint temp1 = new PPoint(Constants.DIMENSION);
 			PPoint temp2 = new PPoint(Constants.DIMENSION);
 			temp1.data = new float[Constants.DIMENSION];
 			temp1.data[0] = p.data[0].data[0];
 			temp1.data[1] = p.data[0].data[2];
-			while(cand_it1.hasNext())
+			//while(cand_it1.hasNext())
+			for(int j = 0; j < cand_set.size(); j++)
 			{
-				RTDataNode p_ = cand_it1.next();
+				//RTDataNode p_ = cand_it1.next();
+				RTDataNode p_ = cand_set.get(j);
 				if(p_ == p)
 					continue;
 				
