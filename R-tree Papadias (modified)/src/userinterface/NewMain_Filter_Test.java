@@ -30,20 +30,24 @@ public class NewMain_Filter_Test extends Canvas {
     	    	
     	
     	TPL_algorithm a = new TPL_algorithm();
-    	/*RTDataNode cur_node = temp2;
+    	RTDataNode cur_node = temp2;
     	Data d = new Data();
-    	d.data[0]=d.data[1]=d.data[2]=d.data[3]=200;
+    	d.data = new float[4];
+    	d.data[0]=d.data[1]=2;
+    	d.data[2]=d.data[3]=169;
     	
     	//d.data[0]=d.data[1]=d.data[2]=d.data[3]=200;
     	cur_node.data[0]=d;
     	Data d1 = new Data();
+    	d1.data = new float[4];
     	d1.data[0]=d1.data[1]=100;
-    	d1.data[2]=d1.data[3]=100;
+    	d1.data[2]=d1.data[3]=297;
     	cur_node.data[1]=d1;
     	
     	Data d2 = new Data();
-    	d2.data[0] = d2.data[1] = 200;
-    	d2.data[2] = d2.data[3] = 200;
+    	d2.data = new float[4];
+    	d2.data[0] = d2.data[1] = 90;
+    	d2.data[2] = d2.data[3] = 298;
     	cur_node.data[2] = d2;
     	//cur_node.data[0].
     	//cur_node.data[0].
@@ -65,13 +69,21 @@ public class NewMain_Filter_Test extends Canvas {
     	
     	RTDataNode one = new RTDataNode(tc.rt, cur_node, 1);
     	RTDataNode two = new RTDataNode(tc.rt, cur_node, 2);*/
-        /*Data d3 = new Data();
-        d3.data[0] = d3.data[1] = 100;
-        d3.data[2] = d3.data[3] = 200;
+        Data d3 = new Data();
+        d3.data = new float[4];
+        d3.data[0] = d3.data[1] = 69;
+        d3.data[2] = d3.data[3] = 233;
         cur_node.data[3] = d3;
-        RTDataNode three = new RTDataNode(tc.rt, cur_node, 3);
-        cur_node.data[3] = null;
-        three.data[0] = d3;*/
+        
+        /*Data d4 = new Data();
+        d4.data = new float[4];
+        d4.data[0] = d4.data[1] = 100;
+        d4.data[2] = d4.data[3] = 200;
+        cur_node.data[4] = d4;*/
+        
+        //RTDataNode three = new RTDataNode(tc.rt, cur_node, 3);
+        //cur_node.data[3] = null;
+        //three.data[0] = d3;
     	//a.cand_set.add(one);
     	//a.cand_set.add(two);
         //a.cand_set.add(three);
