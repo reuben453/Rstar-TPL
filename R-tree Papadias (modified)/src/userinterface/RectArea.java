@@ -59,13 +59,19 @@ class RectArea extends Canvas {
             if (node instanceof RTDataNode)
             {
                 RTDataNode p = null;
-                if(TPL_algorithm.cand_set.size()==1)
+                System.out.println("No. of candidate set items "+TPL_algorithm.cand_set.size());
+                if(TPL_algorithm.cand_set.size()>=1 && Constants.RNN_Check==false)
                 {
                     Iterator <RTDataNode> i1 = TPL_algorithm.cand_set.iterator();
                     p=i1.next();
-                g.setColor(Color.PINK);
-                 g.drawOval((int)(p.data[0].data[0]), (int)(p.data[0].data[2]), 5, 5);
-                 return;
+                g.setColor(Color.red);
+                 g.fillOval((int)(p.data[0].data[0]), (int)(p.data[0].data[2]), 5, 5);
+                 
+                 Constants.RNN_Check=true;
+                 /*if(TPL_algorithm.cand_set.size()==1)
+                     System.exit(1);
+                 else
+                     return;*/
                 }		
                
                 RTDataNode datanode = (RTDataNode)node;

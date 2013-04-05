@@ -10,6 +10,8 @@ class Constants
 	//for initial capacity of set, priority queue
 	static final int cap = 20;
 	
+	static boolean RNN_Check = false;
+	
 	// for experimental rects
     static final int MAXCOORD = 100;
     static final int MAXWIDTH = 60;
