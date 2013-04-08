@@ -33,16 +33,20 @@ public class NewMain_compute_res_mbr_Test extends Canvas {
     	RTDataNode cur_node = temp2;
     	Data d = new Data();
     	d.data = new float[4];
-    	d.data[0]= 60;
-    	d.data[1]= 120;
-    	d.data[2]= 80;
-    	d.data[3]= 100;
+    	//d.data[0]= 60;
+    	d.data[0]= 100;
+    	//d.data[1]= 120;
+    	d.data[1]= 200;
+    	//d.data[2]= 80;
+    	d.data[2]= 100;
+    	//d.data[3]= 100;
+    	d.data[3]= 200;
     	cur_node.data[0]=d;
     	
-    	int A[][] = new int[1][3];
-    	A[0][0] = 0;
-    	A[0][1] = 1;
-    	A[0][2] = -90;                                                    //c is on right side of eqn
+    	float A[][] = new float[1][3];
+    	A[0][0] = -1;
+    	A[0][1] = 10;
+    	A[0][2] = 1400;                                                    //c is on right side of eqn
     	
     	cur_node.res_mbr = new float[Constants.DIMENSION*2];
     	for(int i = 0; i < Constants.DIMENSION*2; i++)
@@ -66,7 +70,7 @@ public class NewMain_compute_res_mbr_Test extends Canvas {
     	//cur_node.data[0].
     	//float mid[]=new float[2];*/
     	PPoint q = new PPoint();
-    	q.data[0]=-1000;q.data[1]=-1000;
+    	q.data[0]=50;q.data[1]=1000;
     	
     	
     	boolean c = a.compute_res_mbr1(A, cur_node, q);

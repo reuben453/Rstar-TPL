@@ -57,8 +57,11 @@ public class TPL_algorithm {
 		return false;
 	}*/
 	
-	
-	boolean compute_res_mbr1(int A[][], RTNode N, PPoint q)
+	/*
+	 * Pro way to do mbr cutting
+	 * Goldstein algo
+	 */
+	boolean compute_res_mbr1(float A[][], RTNode N, PPoint q)
 	{
 		boolean changed = false;
 		float mbr[] = N.get_res_mbr();
@@ -133,7 +136,9 @@ public class TPL_algorithm {
 	}
 	
 	
-	
+	/*
+	 * Noob way to do mbr cutting
+	 */
 	public boolean compute_res_mbr(float slope, RTNode cur_node, float mid1[], PPoint q)
 	{
 		float x1 = 0, y1 = 0, q_val, pt_left_bot = 0, pt_right_bot = 0, pt_left_top = 0, pt_right_top = 0;
