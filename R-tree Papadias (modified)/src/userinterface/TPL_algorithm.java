@@ -57,6 +57,81 @@ public class TPL_algorithm {
 		return false;
 	}*/
 	
+	
+	boolean compute_res_mbr1(int A[][], RTNode N, PPoint q)
+	{
+		boolean changed = false;
+		float mbr[] = N.get_res_mbr();
+		for(int I = 0; I < 3; I++)
+		{
+			for(int i = 0; i < A.length; i++)
+			{
+				float Z[] = new float[Constants.DIMENSION];
+				for(int j = 0; j < Constants.DIMENSION; j++)
+				{
+					if(A[i][j] > 0)
+						Z[j] = mbr[2*j+1];
+					else
+						Z[j] = mbr[2*j];
+				}
+				
+				float d = A[i][A[i].length-1];
+				for(int j = 0; j < Constants.DIMENSION; j++)
+					d -= A[i][j]*Z[j];
+				
+				float d1 = A[i][A[i].length-1];
+				for(int j = 0; j < Constants.DIMENSION; j++)
+					d1 -= A[i][j]*q.data[j];
+				
+				if(d > 0)
+				{
+					N.res_mbr[0] = N.res_mbr[1] = N.res_mbr[2] = N.res_mbr[3] = -1;
+					return true;
+				}
+				for(int j = 0; j < Constants.DIMENSION; j++)
+				{
+					if(A[i][j] == 0)
+					{
+						N.res_mbr[2*j]   = mbr[2*j];
+						N.res_mbr[2*j+1] = mbr[2*j+1];
+					}
+					else if(A[i][j] > 0)
+					{
+						N.res_mbr[2*j+1] = mbr[2*j+1];
+						N.res_mbr[2*j]   = Float.compare(mbr[2*j], mbr[2*j+1]+d/A[i][j])>=0 ? mbr[2*j] : mbr[2*j+1]+d/A[i][j];
+						changed          = true;
+					}
+					else if(A[i][j] < 0)
+					{
+						N.res_mbr[2*j]   = mbr[2*j];
+						N.res_mbr[2*j+1] = Float.compare(mbr[2*j+1], mbr[2*j]+d/A[i][j])<=0 ? mbr[2*j+1] : mbr[2*j]+d/A[i][j];
+						changed          = true;
+					}
+				}
+				boolean flag = false;
+				for(int j = 0; j < Constants.DIMENSION; j++)
+				{
+					if(N.res_mbr[i] != mbr[i])
+					{
+						flag = true;
+						break;
+					}
+				}
+				if(flag == false && changed == true)
+					return true;
+				else if(flag == false && changed == false)
+					return false;
+			}
+			
+		}
+		if(changed == true)
+			return true;
+		else
+			return false;
+	}
+	
+	
+	
 	public boolean compute_res_mbr(float slope, RTNode cur_node, float mid1[], PPoint q)
 	{
 		float x1 = 0, y1 = 0, q_val, pt_left_bot = 0, pt_right_bot = 0, pt_left_top = 0, pt_right_top = 0;
