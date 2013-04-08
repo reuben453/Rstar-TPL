@@ -66,7 +66,7 @@ public class NewMain_compute_res_mbr_Test extends Canvas {
     	//cur_node.data[0].
     	//float mid[]=new float[2];*/
     	PPoint q = new PPoint();
-    	q.data[0]=00;q.data[1]=00;
+    	q.data[0]=-1000;q.data[1]=-1000;
     	
     	
     	boolean c = a.compute_res_mbr1(A, cur_node, q);
