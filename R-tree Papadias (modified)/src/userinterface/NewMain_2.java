@@ -31,7 +31,7 @@ public class NewMain_2 extends Canvas {
       else
     	  temp_node1 = (RTDataNode) tc.rt.root_ptr;
       
-      PPoint p = new PPoint();
+      PPoint p = new PPoint(Constants.DIMENSION);
 		 p.data[0] = 0;
 		 p.data[1] = 0;
 		 float min = 100000, temp = 0;

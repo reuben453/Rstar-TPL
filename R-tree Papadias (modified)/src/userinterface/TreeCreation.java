@@ -10,6 +10,9 @@ public class TreeCreation {
         this.blockLength = blockLength;
         this.cacheSize = cacheSize;
         
+        Constants.DIMENSION = dimension;
+        Constants.RTDataNode__dimension = dimension;
+        
         // initialize tree
         rt = new RTree(filename, blockLength, cacheSize, dimension);
 

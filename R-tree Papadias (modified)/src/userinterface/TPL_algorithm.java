@@ -18,23 +18,54 @@ public class TPL_algorithm {
 	{
 	}
 	
-	public float trim(PPoint query_point, List<RTDataNode> cand_set, RTNode N)
+	public float trim(PPoint q, List<RTDataNode> cand_set, RTNode N)
 	{
 		
-           	if(N.res_mbr == null)
+        if(N.res_mbr == null)
 		{
 			N.res_mbr = new float[2*Constants.DIMENSION];
 			for(int i = 0; i < 2*Constants.DIMENSION; i++)
 				N.res_mbr[i] = N.get_mbr()[i];
 		}
-				
-		/*N.res_mbr = */clipping(query_point, N);
+		
+        
+        float A[][] = new float[cand_set.size()][Constants.DIMENSION+1];
+        Iterator<RTDataNode> it = cand_set.iterator();
+		//for(int i = 0; i < cand_set.size(); i++)
+		//while(it.hasNext())
+        for(int i = 0; i < cand_set.size() && it.hasNext(); i++)
+		{
+			float p_[] = it.next().data[0].data;
+			float p[] = new float[Constants.DIMENSION];
+			for(int j = 0; j < Constants.DIMENSION; j++)
+				p[j] = p_[2*j];
+			float mid[] = new float[Constants.DIMENSION];
+			
+			for(int j = 0; j < Constants.DIMENSION; j++)
+			{
+				mid[j] = (p[j] + q.data[j])/2;
+				//mid[0] = (p[0] + q.data[0])/2;
+				//mid[1] = (p[2] + q.data[1])/2;
+			}
+			
+			for(int j = 0; j < Constants.DIMENSION; j++)
+			{
+				A[i][Constants.DIMENSION] += Math.pow(p[j], 2)-Math.pow(q.data[j], 2);
+				A[i][j] = 2*(q.data[j] - p[j]);
+			}
+			A[i][Constants.DIMENSION] *= -1;
+		}
+        
+        
+        
+           	
+		/*N.res_mbr = */clipping1(A, N, q);
 		if(N.res_mbr != null)
 		{
                 if(N.res_mbr[0] == -1 && N.res_mbr[1] == -1)
                     return (float) Constants.MAXFLOAT;
                 else
-                	return Constants.MINDIST(query_point, N.res_mbr);
+                	return Constants.MINDIST(q, N.get_res_mbr());
 		}
         
                 /*if(N.res_mbr==null)
@@ -44,7 +75,7 @@ public class TPL_algorithm {
 		if(N.res_mbr[0] == -1)
 			return (float) Constants.MAXFLOAT;*/
 		
-		return Constants.MINDIST(query_point, N.get_mbr());
+		return Constants.MINDIST(q, N.get_mbr());
 	}
 	
 	/*boolean val(float slope, float mid[], PPoint q, float p[])
@@ -59,12 +90,15 @@ public class TPL_algorithm {
 	
 	/*
 	 * Pro way to do mbr cutting
-	 * Goldstein algo
+	 * clipping algo according to paper "Processing Queries by Linear Constraints" by Goldstein et al
 	 */
-	boolean compute_res_mbr1(float A[][], RTNode N, PPoint q)
+	boolean clipping1(float A[][], RTNode N, PPoint q)
 	{
 		boolean changed = false;
 		float mbr[] = N.get_res_mbr();
+		float mbr1[] = new float[2*Constants.DIMENSION];
+		for(int i = 0; i < 2*Constants.DIMENSION; i++)
+			mbr[i] = N.get_res_mbr()[i];
 		for(int I = 0; I < 3; I++)
 		{
 			for(int i = 0; i < A.length; i++)
@@ -90,7 +124,8 @@ public class TPL_algorithm {
 				
 				if(d > 0  && d1 < 0 || d1 > 0 && d < 0)
 				{
-					N.res_mbr[0] = N.res_mbr[1] = N.res_mbr[2] = N.res_mbr[3] = -1;
+					for(int j = 0; j < 2*Constants.DIMENSION; j++)
+						N.res_mbr[j] = -1;
 					return true;
 				}
 				for(int j = 0; j < Constants.DIMENSION; j++)
@@ -113,26 +148,22 @@ public class TPL_algorithm {
 						changed          = true;
 					}
 				}
-				boolean flag = false;
-				for(int j = 0; j < Constants.DIMENSION; j++)
-				{
-					if(N.res_mbr[i] != mbr[i])
-					{
-						flag = true;
-						break;
-					}
-				}
-				if(flag == false && changed == true)
-					return true;
-				else if(flag == false && changed == false)
-					return false;
+				
 			}
-			
+			boolean flag = false;
+			for(int j = 0; j < 2*Constants.DIMENSION; j++)
+			{
+				if(N.res_mbr[j] != mbr1[j])
+				{
+					mbr1[j] = N.res_mbr[j];
+					flag = true;
+					//break;
+				}
+			}
+			if(flag == false)
+				return changed;
 		}
-		if(changed == true)
-			return true;
-		else
-			return false;
+		return changed;
 	}
 	
 	
@@ -557,11 +588,11 @@ public class TPL_algorithm {
 		
 	}
 	
-	/**
-	 * clipping algo according to paper "Processing Queries by Linear Constraints" by Goldstein et al
-	 */
-	public float[] clipping(PPoint q, RTNode cur_node)
+	
+	/*public float[] clipping(PPoint q, RTNode cur_node)
 	{
+		float A[] = new float[Constants.DIMENSION+1];
+		
 		float Bp[] = new float[2*Constants.DIMENSION];
 		float mbr[] = cur_node.get_mbr();
 		for(int i = 0; i < 2*Constants.DIMENSION; i++)
@@ -571,15 +602,42 @@ public class TPL_algorithm {
 		//for(int i = 0; i < cand_set.size(); i++)
 		while(it.hasNext())
 		{
-			float p[] = it.next().data[0].data;
+			float p_[] = it.next().data[0].data;
+			float p[] = new float[Constants.DIMENSION];
+			for(int i = 0; i < Constants.DIMENSION; i++)
+				p[i] = p_[2*i];
 			float mid[] = new float[Constants.DIMENSION];
-			mid[0] = (p[0] + q.data[0])/2;
-			mid[1] = (p[2] + q.data[1])/2;
+			
+			for(int i = 0; i < Constants.DIMENSION; i++)
+			{
+				mid[i] = (p[i] + q.data[i])/2;
+				//mid[0] = (p[0] + q.data[0])/2;
+				//mid[1] = (p[2] + q.data[1])/2;
+			}
+			
+			for(int i = 0; i < Constants.DIMENSION; i++)
+			{
+				A[Constants.DIMENSION] += Math.pow(p[i], 2)-Math.pow(q.data[i], 2);
+				
+				A[i] = 2*(q.data[i] - p[i]);
+			}
+			
+			
+				
 			//float slope ;
 			//if((p[2] - q.data[1])==0)
-					
-			float slope = -1*((p[0] - q.data[0])/(p[2] - q.data[1]));
-			boolean check=compute_res_mbr(slope,cur_node, mid, q);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			//float slope = -1*((p[0] - q.data[0])/(p[2] - q.data[1]));
+			//boolean check=compute_res_mbr(slope,cur_node, mid, q);
+			boolean check=compute_res_mbr1(A, cur_node, q);
             if(!check)
             {
             	cur_node.res_mbr = null;
@@ -599,7 +657,7 @@ public class TPL_algorithm {
 			
 		}
 		return Bp;
-	}
+	}*/
 	
 	/**
 	 * Implements the TPL RNN algorithm
@@ -716,7 +774,9 @@ public class TPL_algorithm {
 				//if(!cand_it.hasNext() || cand_set.isEmpty())
 				//if(cand_set.size() == 1)
 				{
-					System.out.println("************RESULT FOUND***********"+p.data[0].data[0]+" "+p.data[0].data[2]);
+					System.out.print("************RESULT FOUND***********");
+					for(int j = 0; j < 2*Constants.DIMENSION; j++)
+						System.out.println(p.data[0].data[j]+" ");
 					return;
 				}
 			}

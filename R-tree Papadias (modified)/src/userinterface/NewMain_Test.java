@@ -42,7 +42,7 @@ public class NewMain_Test extends Canvas {
     	//cur_node.data[0].
     	//cur_node.data[0].
     	float mid[]=new float[2];
-    	PPoint q = new PPoint();
+    	PPoint q = new PPoint(Constants.DIMENSION);
     	q.data[0]=0;q.data[1]=300;
     	
     	   	

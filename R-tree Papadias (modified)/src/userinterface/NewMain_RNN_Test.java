@@ -7,14 +7,14 @@ package userinterface;
 import java.awt.*;
 
 
-public class NewMain_compute_res_mbr_Test extends Canvas {
+public class NewMain_RNN_Test extends Canvas {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
     	
-    	TreeCreation tc = new TreeCreation("ab.rtr", 1, 2, 256, 128);
+    	TreeCreation tc = new TreeCreation("ab.rtr", 4, 4, 256, 128);
     	//TreeCreation tc = new TreeCreation("ab.rtr",128);
     	RTDirNode temp1 = null;
     	RTDataNode temp2 = null;
@@ -31,30 +31,13 @@ public class NewMain_compute_res_mbr_Test extends Canvas {
     	
     	TPL_algorithm a = new TPL_algorithm();
     	RTDataNode cur_node = temp2;
-    	Data d = new Data();
+    	/*Data d = new Data();
     	d.data = new float[4];
-    	//d.data[0]= 60;
-    	d.data[0]= 100;
-    	//d.data[1]= 120;
-    	d.data[1]= 200;
-    	//d.data[2]= 80;
-    	d.data[2]= 100;
-    	//d.data[3]= 100;
-    	d.data[3]= 200;
-    	cur_node.data[0]=d;
-    	
-    	float A[][] = new float[1][3];
-    	A[0][0] = -1;
-    	A[0][1] = 10;
-    	A[0][2] = 1400;                                                    //c is on right side of eqn
-    	
-    	cur_node.res_mbr = new float[Constants.DIMENSION*2];
-    	for(int i = 0; i < Constants.DIMENSION*2; i++)
-    		cur_node.res_mbr[i] = cur_node.get_mbr()[i];
-    	
+    	d.data[0]=d.data[1]=2;
+    	d.data[2]=d.data[3]=169;
     	
     	//d.data[0]=d.data[1]=d.data[2]=d.data[3]=200;
-    	/*
+    	cur_node.data[0]=d;
     	Data d1 = new Data();
     	d1.data = new float[4];
     	d1.data[0]=d1.data[1]=100;
@@ -70,18 +53,9 @@ public class NewMain_compute_res_mbr_Test extends Canvas {
     	//cur_node.data[0].
     	//float mid[]=new float[2];*/
     	PPoint q = new PPoint(Constants.DIMENSION);
-    	q.data[0]=50;q.data[1]=1000;
+    	q.data[0]=00;q.data[1]=00;
+    	//q.data[2]=0;q.data[3]=0;
     	
-    	
-    	/*boolean c = a.compute_res_mbr1(A, cur_node, q);
-    	if(c)
-    		System.out.println("Changed");
-    	else
-    		System.out.println("Not changed");
-    	
-    	for(int i = 0; i < Constants.DIMENSION*2; i++)
-    		System.out.print(cur_node.res_mbr[i] + "  ");
-    	*/
     	   	
     	//mid[0]=500;
     	//mid[1]=500;
@@ -117,8 +91,8 @@ public class NewMain_compute_res_mbr_Test extends Canvas {
     	//boolean call=a.compute_res_mbr((float)Float.POSITIVE_INFINITY, cur_node, mid, q);
     	//float Bp[] = a.clipping(q, cur_node);*/
     	//a.Reverse_nearest_neighbour(tc.rt, q);
-    	//a.Reverse_nearest_neighbour(tc.rt, q);
-    	//System.out.println("Page Accesses: "+tc.rt.page_access);
+    	a.Reverse_nearest_neighbour(tc.rt, q);
+    	System.out.println("Page Accesses: "+tc.rt.page_access);
         //float trim=a.trim(q, a.cand_set, cur_node);
         /*
         

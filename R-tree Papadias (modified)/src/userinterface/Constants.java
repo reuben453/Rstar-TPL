@@ -14,7 +14,7 @@ class Constants
     static final int MAXCOORD = 100;
     static final int MAXWIDTH = 60;
     static final int NUMRECTS = 200;
-    static final int DIMENSION = 2;
+    static int DIMENSION = 2;
     static final int BLOCKLENGTH = 1024;
     static final int CACHESIZE = 128;
 
@@ -33,7 +33,7 @@ class Constants
     static final int SIZEOF_FLOAT = 4;
     static final int SIZEOF_INT = 4;
 
-    public final static int RTDataNode__dimension = 2;
+    public static int RTDataNode__dimension = 2;
 
     public final static float MAXREAL = (float)9.99e20;
     public final static int MAX_DIMENSION = 256;
