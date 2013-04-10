@@ -20,11 +20,11 @@ public class Test
 
         SortedLinList res = new SortedLinList();
         rectangle r = new rectangle(0);
-        r.LX = 10;
+        /*r.LX = 10;
         r.UX = 75;
         r.LY = 40;
         r.UY = 45;
-        
+        */
         double dist[] = new double[2];
         dist[0] = (double)0;
         dist[1] = (double)50;

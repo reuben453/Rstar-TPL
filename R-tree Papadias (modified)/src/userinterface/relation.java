@@ -36,13 +36,23 @@ public class relation
 
     public static double distance(rectangle r1 , rectangle r2)
     {
-        double x1,y1,x2,y2;
-        double d;
-        x1=(r1.LX+r1.UX)/2;
+        //double x1,y1,x2,y2;
+        double d = 0;
+        double x1[] = new double[Constants.DIMENSION];
+        double x2[] = new double[Constants.DIMENSION];
+        for(int i = 0; i < Constants.DIMENSION; i++)
+        	x1[i] = (r1.bounds[2*i]+r1.bounds[2*i+1])/2;
+        
+        for(int i = 0; i < Constants.DIMENSION; i++)
+        	x2[i] = (r2.bounds[2*i]+r2.bounds[2*i+1])/2;
+        /*x1=(r1.LX+r1.UX)/2;
         y1=(r1.LY+r1.UY)/2;
         x2=(r2.LX+r2.UX)/2;
-        y2=(r2.LY+r2.UY)/2;
-        d=Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+        y2=(r2.LY+r2.UY)/2;*/
+        for(int i = 0; i < Constants.DIMENSION; i++)
+        	d += Math.pow(x1[i]-x2[i], 2);
+        d = Math.sqrt(d);
+        //d=Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
         return d;
     }
 

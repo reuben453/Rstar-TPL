@@ -64,10 +64,12 @@ public class TreeCreation {
             rectangle r = new rectangle(i);
             // copy the rectangle's coords into d's data
             d.data = new float[dimension*2];
-            d.data[0] = (float)r.LX;
+            for(int j = 0; j < dimension*2; j++)
+            	d.data[j] = (float)r.bounds[j];
+            /*d.data[0] = (float)r.LX;
             d.data[1] = (float)r.LX;
             d.data[2] = (float)r.LY;
-            d.data[3] = (float)r.LY;
+            d.data[3] = (float)r.LY;*/
             //d.print();
             rt.insert(d);
         }

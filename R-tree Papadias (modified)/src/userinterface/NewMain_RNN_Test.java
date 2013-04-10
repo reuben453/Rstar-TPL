@@ -14,7 +14,8 @@ public class NewMain_RNN_Test extends Canvas {
      */
     public static void main(String[] args) {
     	
-    	TreeCreation tc = new TreeCreation("ab.rtr", 4, 4, 256, 128);
+    	//TreeCreation tc = new TreeCreation("ab.rtr", 100, 6, 256, 128);
+    	TreeCreation tc = new TreeCreation("ab.rtr", 100000, 10, 1024, 512);
     	//TreeCreation tc = new TreeCreation("ab.rtr",128);
     	RTDirNode temp1 = null;
     	RTDataNode temp2 = null;
@@ -31,13 +32,22 @@ public class NewMain_RNN_Test extends Canvas {
     	
     	TPL_algorithm a = new TPL_algorithm();
     	RTDataNode cur_node = temp2;
-    	/*Data d = new Data();
-    	d.data = new float[4];
-    	d.data[0]=d.data[1]=2;
-    	d.data[2]=d.data[3]=169;
     	
+    	Data d = new Data();
+    	d.data = new float[2*Constants.DIMENSION];
+    	d.data[0]=d.data[1]=1;
+    	d.data[2]=d.data[3]=1;
+    	d.data[4]=d.data[5]=1;
+    	d.data[6]=d.data[7]=1;
+    	d.data[8]=d.data[9]=1;
+    	d.data[10]=d.data[11]=1;
+    	d.data[12]=d.data[13]=1;
+    	d.data[14]=d.data[15]=1;
+    	d.data[16]=d.data[17]=1;
+    	d.data[18]=d.data[19]=1;
+    	tc.rt.insert(d);
     	//d.data[0]=d.data[1]=d.data[2]=d.data[3]=200;
-    	cur_node.data[0]=d;
+    	/*cur_node.data[0]=d;
     	Data d1 = new Data();
     	d1.data = new float[4];
     	d1.data[0]=d1.data[1]=100;
@@ -48,13 +58,13 @@ public class NewMain_RNN_Test extends Canvas {
     	d2.data = new float[4];
     	d2.data[0] = d2.data[1] = 90;
     	d2.data[2] = d2.data[3] = 298;
-    	cur_node.data[2] = d2;
+    	cur_node.data[2] = d2;*/
     	//cur_node.data[0].
     	//cur_node.data[0].
     	//float mid[]=new float[2];*/
     	PPoint q = new PPoint(Constants.DIMENSION);
-    	q.data[0]=00;q.data[1]=00;
-    	//q.data[2]=0;q.data[3]=0;
+    	q.data[0]=1;q.data[1]=00;
+    	//q.data[2]=00;q.data[3]=00;
     	
     	   	
     	//mid[0]=500;
