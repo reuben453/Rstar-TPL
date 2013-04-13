@@ -4,10 +4,13 @@
  */
 package userinterface;
 
-import java.awt.*;
+import java.awt.Canvas;
+import java.util.Scanner;
 
 
-public class NewMain_RNN_Test extends Canvas {
+
+
+public class NewMain_interactive_Test extends Canvas {
 
     /**
      * @param args the command line arguments
@@ -15,7 +18,7 @@ public class NewMain_RNN_Test extends Canvas {
     public static void main(String[] args) {
     	
     	//TreeCreation tc = new TreeCreation("ab.rtr", 100, 6, 256, 128);
-    	TreeCreation tc = new TreeCreation("ab.rtr", 1000, 2, 1024, 512);
+    	TreeCreation tc = new TreeCreation("ab.rtr", 100000, 2, 1024, 512);
     	//TreeCreation tc = new TreeCreation("ab.rtr",128);
     	RTDirNode temp1 = null;
     	RTDataNode temp2 = null;
@@ -64,8 +67,8 @@ public class NewMain_RNN_Test extends Canvas {
     	//cur_node.data[0].
     	//float mid[]=new float[2];*/
     	PPoint q = new PPoint(Constants.DIMENSION);
-    	q.data[0]=70;
-    	q.data[1]=100;
+    	//q.data[0]=70;
+    	//q.data[1]=100;
     	//q.data[2]=00;q.data[3]=00;
     	
     	   	
@@ -103,11 +106,53 @@ public class NewMain_RNN_Test extends Canvas {
     	//boolean call=a.compute_res_mbr((float)Float.POSITIVE_INFINITY, cur_node, mid, q);
     	//float Bp[] = a.clipping(q, cur_node);*/
     	//a.Reverse_nearest_neighbour(tc.rt, q);
-    	a.Reverse_nearest_neighbour(tc.rt, q);
-    	System.out.println("Page Accesses: "+tc.rt.page_access);
+    	
+    	
+    	long bef, after, avg = 0;
+    	Scanner inp = new Scanner(System.in);
+    	int flag = 1, flag1 = 0;
+    	while(true)
+    	{
+	    	for(int j = 0; j < 400; j++)
+	    	{
+	    		if(flag1 == 0)
+	    		{
+	    			System.out.println("Enter the query point: ");
+			    	for(int i = 0 ; i < Constants.DIMENSION; i++)
+			    	{
+			    		q.data[i] = inp.nextFloat();
+			    		if(q.data[i] < 0)
+			    		{
+			    			flag = 0;
+			    			break;
+			    		}
+			    	}
+			    	if(flag1 == 0)
+			    		flag1 = 1;
+			    	if(flag == 0)
+			    		break;
+	    		}
+		    	bef = System.nanoTime();
+		    	a.Reverse_nearest_neighbour(tc.rt, q);
+		    	after = System.nanoTime() - bef;
+		    	avg += after;
+		    	if(avg < 0)
+		    	{
+		    		System.out.println("Time var avg has overflown");
+		    		avg = inp.nextInt();
+		    	}
+		    	System.out.println("Time: "+after);
+	    	}
+	    	System.out.println("Average time: "+avg/200);
+	    	avg = 0;
+	    	flag1 = 0;
+	    	if(flag == 0)
+	    		break;
+    	}
+    	
+    	//System.out.println("Page Accesses: "+tc.rt.page_access);
         //float trim=a.trim(q, a.cand_set, cur_node);
         /*
-        
         
         
         //if(call == false)
@@ -119,7 +164,5 @@ public class NewMain_RNN_Test extends Canvas {
     		System.out.println(cur_node.res_mbr[i]);
         tc.display();*/
     	return;
-    }
-   
-   
+    }   
 }

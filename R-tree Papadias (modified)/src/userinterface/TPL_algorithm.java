@@ -760,6 +760,10 @@ public class TPL_algorithm {
 				N_ref.add(temp);
 		}
 		TPL_refinement(query_point, P_ref, N_ref);
+		
+		cand_set.clear();
+		ref_set.clear();
+		queue.clear();
 		return;
 		//RTDirNode temp1 = (RTDirNode) rt.root_ptr;
 		//queue.add(temp1.entries[0].get_son());
@@ -790,8 +794,10 @@ public class TPL_algorithm {
 			RTDataNode p = cand_set.get(i);
 			Iterator<RTDataNode> it1 = P_ref.iterator();
 			temp1.data = new float[Constants.DIMENSION];
-			temp1.data[0] = p.data[0].data[0];
-			temp1.data[1] = p.data[0].data[2];
+			for(int j = 0; j < Constants.DIMENSION; j++)
+				temp1.data[j] = p.data[0].data[2*j];
+			//temp1.data[0] = p.data[0].data[0];
+			//temp1.data[1] = p.data[0].data[2];
 			while(it1.hasNext())
 			{
 				RTDataNode p_ = it1.next();
@@ -799,8 +805,10 @@ public class TPL_algorithm {
 				//	continue;
 								
 				temp2.data = new float[Constants.DIMENSION];
-				temp2.data[0] = p_.data[0].data[0];
-				temp2.data[1] = p_.data[0].data[2];
+				for(int j = 0; j < Constants.DIMENSION; j++)
+					temp2.data[j] = p_.data[0].data[2*j];
+				//temp2.data[0] = p_.data[0].data[0];
+				//temp2.data[1] = p_.data[0].data[2];
 				if(Constants.objectDIST(temp1, temp2) < Constants.objectDIST(query_point, temp1))
 				{
 					//cand_it.remove();
@@ -836,10 +844,15 @@ public class TPL_algorithm {
 					if(temp.toVisit != null && temp.toVisit.isEmpty())
 					{
 						PPoint t = new PPoint(Constants.DIMENSION);
-						t.data[0] = temp.data[0].data[0];
-						t.data[1] = temp.data[0].data[2];
+						for(int j = 0; j < Constants.DIMENSION; j++)
+							t.data[j] = temp.data[0].data[2*j];
+						//t.data[0] = temp.data[0].data[0];
+						//t.data[1] = temp.data[0].data[2];
 						count++;
-						System.out.println(""+Constants.objectDIST(t, query_point)+"  "+t.data[0]+","+t.data[1]);
+						System.out.print(""+Constants.objectDIST(t, query_point));
+						for(int j = 0; j < t.data.length; j++)
+							System.out.print("  "+t.data[j]);
+						System.out.println("");
 					}
 				}
 				//cand_it.remove();
@@ -869,8 +882,10 @@ public class TPL_algorithm {
 			PPoint temp1 = new PPoint(Constants.DIMENSION);
 			PPoint temp2 = new PPoint(Constants.DIMENSION);
 			temp1.data = new float[Constants.DIMENSION];
-			temp1.data[0] = p.data[0].data[0];
-			temp1.data[1] = p.data[0].data[2];
+			for(int j = 0; j < Constants.DIMENSION; j++)
+				temp1.data[j] = p.data[0].data[2*j];
+			//temp1.data[0] = p.data[0].data[0];
+			//temp1.data[1] = p.data[0].data[2];
 			//while(cand_it1.hasNext())
 			for(int j = 0; j < cand_set.size(); j++)
 			{
@@ -880,8 +895,10 @@ public class TPL_algorithm {
 					continue;
 				
 				temp2.data = new float[Constants.DIMENSION];
-				temp2.data[0] = p_.data[0].data[0];
-				temp2.data[1] = p_.data[0].data[2];
+				for(int k = 0; k < Constants.DIMENSION; k++)
+					temp2.data[k] = p_.data[0].data[2*k];
+				//temp2.data[0] = p_.data[0].data[0];
+				//temp2.data[1] = p_.data[0].data[2];
 				if(Constants.objectDIST(temp1, temp2) < Constants.objectDIST(query_point, temp1))
 				{
 					cand_set.remove(temp1);

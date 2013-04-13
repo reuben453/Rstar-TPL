@@ -57,12 +57,19 @@ public class rectangle
         
         for(int j = 0; j < Constants.DIMENSION; j++)
         	bounds[2*j+1] = bounds[2*j];
+        if(Constants.DIMENSION == 1)
+            	bounds[1] = 100;
         
         this.Prop=(short) (5*Math.random() + 1);
         LX = bounds[0];
         UX = bounds[1];
-        LY = bounds[2];
-        UY = bounds[3];
+        LY = 100;
+        UY = 100;
+        if(Constants.DIMENSION > 1)
+        {
+        	LY = bounds[2];
+        	UY = bounds[3];
+        }
     }
 
     public void print()
@@ -75,6 +82,8 @@ public class rectangle
     
     public Rectangle toRectangle()
     {
+    	if(Constants.DIMENSION == 1)
+    		return new Rectangle(bounds[0], bounds[1], 0, 0);
     	return new Rectangle(bounds[0], bounds[1], bounds[2]-bounds[0], bounds[3]-bounds[1]);
         //return new Rectangle(LX, LY, UX-LX, UY-LY);
     }

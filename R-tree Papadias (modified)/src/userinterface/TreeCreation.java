@@ -81,9 +81,9 @@ public class TreeCreation {
         //qf.move(400, 0);
 
         // Create the Rectangle Display Window
-        f = new RectFrame(this);
-        f.pack();
-        f.show();
+        //f = new RectFrame(this);
+        //f.pack();
+        //f.show();
 
     }
     

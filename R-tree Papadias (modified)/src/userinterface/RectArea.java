@@ -59,17 +59,23 @@ class RectArea extends Canvas {
             {
                 RTDataNode datanode = (RTDataNode)node;
 
-                Rectangle r = new Rectangle((int)datanode.data[i].get_mbr()[0],
+                Rectangle r = null;
+                if(Constants.DIMENSION > 1)
+                	r = new Rectangle((int)datanode.data[i].get_mbr()[0],
                                             (int)datanode.data[i].get_mbr()[2],
                                             (int)datanode.data[i].get_mbr()[1] - (int)datanode.data[i].get_mbr()[0],
                                             (int)datanode.data[i].get_mbr()[3] - (int)datanode.data[i].get_mbr()[2]);
+                else if (Constants.DIMENSION == 1)
+                	r = new Rectangle((int)datanode.data[i].get_mbr()[0], (int)datanode.data[i].get_mbr()[1], (int)datanode.data[i].get_mbr()[1] - (int)datanode.data[i].get_mbr()[0], 0);
                 
-                
-                Rectangle r1 = new Rectangle((int)datanode.data[i].get_mbr()[0],
+                Rectangle r1 = null;
+                if(Constants.DIMENSION > 1)
+                	r1 = new Rectangle((int)datanode.data[i].get_mbr()[0],
                         (int)datanode.data[i].get_mbr()[2],
                         (int)datanode.data[i].get_mbr()[1] - (int)datanode.data[i].get_mbr()[0],
                         (int)datanode.data[i].get_mbr()[3] - (int)datanode.data[i].get_mbr()[2]);
-                
+                else if (Constants.DIMENSION == 1)
+                	r1 = new Rectangle((int)datanode.data[i].get_mbr()[0], (int)datanode.data[i].get_mbr()[1],  (int)datanode.data[i].get_mbr()[1] - (int)datanode.data[i].get_mbr()[0], 0);
                 
                 
                 
@@ -97,10 +103,15 @@ class RectArea extends Canvas {
                 //if(!(n.get_mbr()[0] == n.get_res_mbr()[0] && n.get_mbr()[1] == n.get_res_mbr()[1] && n.get_mbr()[2] == n.get_res_mbr()[2] && n.get_mbr()[3] == n.get_res_mbr()[3]))
                 //	g.setColor(Color.ORANGE);
 
-                Rectangle r = new Rectangle((int)mbr[0],
+                Rectangle r = null;
+                if(Constants.DIMENSION > 1)
+                	r = new Rectangle((int)mbr[0],
                                             (int)mbr[2],
                                             (int)mbr[1] - (int)mbr[0],
                                             (int)mbr[3] - (int)mbr[2]);
+                
+                else if(Constants.DIMENSION == 1)
+                	r = new Rectangle((int)mbr[0], (int)mbr[1], (int)mbr[1] - (int)mbr[0], 0);
                 
                 /*Rectangle r1 = new Rectangle((int)mbr1[0],
                         (int)mbr1[2],
@@ -175,12 +186,18 @@ class RectArea extends Canvas {
          * Draw the residual root mbr
          */
         g.setColor(Color.ORANGE);
-        if(mb1 != null && mb1[1] != -1)
+        if(mb1 != null && mb1[1] != -1 && Constants.DIMENSION > 1)
         	g.drawRect((int)mb1[0],(int)mb1[2],((int)mb1[1]-(int)mb1[0]),((int)mb1[3]-(int)mb1[2]));
+        else if(Constants.DIMENSION == 1 && mb1 != null && mb1[1] != -1)
+        	g.drawLine((int)mb1[0],100, (int)mb1[1], 100);
+        //drawRect((int)mb1[0],(int)mb1[2],((int)mb1[1]-(int)mb1[0]),);
         
       g.setColor(Color.CYAN);
       //System.out.println("This"+(int)mb[0]+" "+(int)mb[2]+" "+(int)(mb[1]-mb[0])+" "+(int)(mb[3]-mb[2]));
+      if(Constants.DIMENSION > 1)
         g.drawRect((int)mb[0],(int)mb[2],((int)mb[1]-(int)mb[0]),((int)mb[3]-(int)mb[2]));
+      else if (Constants.DIMENSION == 1)
+    	  g.drawLine((int)mb[0],100, (int)mb[1], 100);
         
         
         drawNode(node, g);
@@ -192,7 +209,10 @@ class RectArea extends Canvas {
 	        for (Object obj = queryres.get_first(); obj != null; obj = queryres.get_next())
 	        {
 	        	float mbr[] = ((Data)obj).data;
-	        	Rectangle r = new Rectangle((int)mbr[0], (int)mbr[2], (int)mbr[1] - (int)mbr[0], (int)mbr[3] - (int)mbr[2]);
+	        	Rectangle r;
+	        	if(Constants.DIMENSION == 1)
+	        		r = new Rectangle((int)mbr[0], (int)mbr[1], (int)mbr[1] - (int)mbr[0], 0);
+	        	r = new Rectangle((int)mbr[0], (int)mbr[2], (int)mbr[1] - (int)mbr[0], (int)mbr[3] - (int)mbr[2]);
             	Rectangle box = getDrawableRect(r, d);
             	g.drawRect(box.x, box.y, box.width - 1, box.height - 1);
                
